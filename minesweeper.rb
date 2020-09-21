@@ -46,7 +46,8 @@ class Game
 
         if tile.bomb == true
             puts "You revealed a bomb and lost the game!"
-            File.delete("game.yml")
+            @board.final_render
+            File.delete("game.yml") if File.exist?("game.yml")
             raise "Game over"
         else
             tile.reveal
@@ -83,6 +84,7 @@ class Game
         end
 
         puts "Congratulations, you won the game!"
+        @board.final_render
     end
 
 end

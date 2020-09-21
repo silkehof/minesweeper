@@ -9,7 +9,7 @@ class Tile
         @flagged = false
         @bomb = false
         @revealed = false
-        @face_value = "*".colorize(:green)
+        @face_value = "*".colorize(:blue)
         @row_i = row_i
         @col_i = col_i
         @board = board
@@ -19,12 +19,12 @@ class Tile
         @revealed = true
 
         if self.neighbors_bomb_count == 0
-            @face_value = "_".colorize(:blue)
+            @face_value = "_".colorize(:green)
             self.neighbors.each do |neighbor|
                 neighbor.reveal
             end
         else 
-            @face_value = "#{self.neighbors_bomb_count}".colorize(:blue)
+            @face_value = "#{self.neighbors_bomb_count}".colorize(:green)
         end
     end
 

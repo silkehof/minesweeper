@@ -51,6 +51,18 @@ class Board
         puts
     end
 
+    def final_render
+        all_tiles = @grid.flatten
+
+        all_tiles.each do |tile|
+            if tile.bomb == true
+                tile.face_value = "B".colorize(:color => :white, :background => :red)
+            end
+        end
+
+        self.render
+    end
+
     def [](pos)
         x, y = pos
         @grid[x][y]
