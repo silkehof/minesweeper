@@ -2,8 +2,8 @@ require "./board.rb"
 require "./tile.rb"
 
 class Game
-    def initialize
-        @board = Board.new
+    def initialize(height, width, bombs)
+        @board = Board.new(height, width, bombs)
     end
 
     def get_command
@@ -15,7 +15,7 @@ class Game
     end
 
     def get_pos # returns array with pos as two integers, e.g. [1, 2]
-        puts "Please enter a position in format row, column: e.g. ‘f 2, 3‘:"
+        puts "Please enter a position in format row, column: e.g. ‘2, 3‘:"
         print "> "
 
         user_input = gets.chomp
@@ -67,6 +67,6 @@ end
 
 
 if __FILE__ == $PROGRAM_NAME
-    game = Game.new
+    game = Game.new(9, 9, 10)
     game.run
 end

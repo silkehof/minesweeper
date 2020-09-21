@@ -3,16 +3,20 @@ require "./tile.rb"
 class Board
     attr_accessor :grid
 
-    def initialize
+    def initialize(height, width, bombs)
+        @height = height
+        @width = width 
+        @bombs = bombs
         @grid = []
+        
         self.create_tiles
         self.place_bombs
     end
 
     def create_tiles
-        (0..8).each do |row_i|
+        (0...@height).each do |row_i|
             row = []
-            (0..8).each do |col_i|
+            (0...@width).each do |col_i|
                 row << Tile.new(self, row_i, col_i)
             end
             @grid << row
@@ -23,11 +27,11 @@ class Board
         all_tiles = @grid.flatten
         all_tiles.shuffle!
 
-        all_tiles[0..9].each { |tile| tile.bomb = true }
+        all_tiles[0..@bombs].each { |tile| tile.bomb = true }
     end
 
-    def render_row(row, n)
-        string = "#{n} "
+    def render_row(row, row_num)
+        string = "#{row_num} "
         row.each do |tile|
             string = string + "#{tile.face_value}" + " "
         end
@@ -36,11 +40,15 @@ class Board
     end
 
     def render
-        n = 0
-        puts "  0 1 2 3 4 5 6 7 8"
+        row_num = 0
+
+        col_title = ""
+        (0...@width).each { |col_num| col_title += " #{col_num}" }
+
+        puts " " + col_title
         @grid.each do |row|
-            render_row(row, n)
-            n += 1
+            render_row(row, row_num)
+            row_num += 1
         end
         puts
     end
