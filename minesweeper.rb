@@ -45,6 +45,7 @@ class Game
 
         if tile.bomb == true
             puts "You revealed a bomb and lost the game!"
+            File.delete("game.yml")
             raise "Game over"
         else
             tile.reveal
@@ -58,7 +59,7 @@ class Game
     end
 
     def save_game
-        saved_game = self.to_yaml
+        File.open("game.yml", "w") { |file| file.write(self.to_yaml) }
         puts "The game has been saved and ended."
         raise "Game saved"
     end
@@ -67,7 +68,7 @@ class Game
         while @board.unrevealed_empty_tiles > 0
             system("clear")
             @board.render
-            
+
             command = get_command
             self.save_game if command == "s"
 
@@ -87,7 +88,10 @@ end
 
 
 if __FILE__ == $PROGRAM_NAME
-    game = Game.new(9, 9, 10) 
-    # or load  a previous game!
+    if File.exist?("game.yml")
+        game = YAML.load(File.read("game.yml")) 
+    else
+        game = Game.new(9, 9, 10)
+    end
     game.run
 end
