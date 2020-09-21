@@ -43,10 +43,4 @@ class Tile
     def flag
         @face_value = "F"
     end
-
-    #def inspect
-    #end
-
-
-
 end
