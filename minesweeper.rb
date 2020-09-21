@@ -1,5 +1,6 @@
 require "./board.rb"
 require "./tile.rb"
+require "yaml"
 
 class Game
     def initialize(height, width, bombs)
@@ -9,7 +10,7 @@ class Game
     def get_command
         command = nil
         until command && valid_command?(command)
-            puts "Please enter a command (r for reveal / f for flag):"
+            puts "Please enter a command (r for reveal / f for flag / s for save and exit game):"
             print "> "
 
             command = gets.chomp
@@ -18,7 +19,7 @@ class Game
     end
 
     def valid_command?(command)
-        command == "r" || command == "f"
+        command == "r" || command == "f" || command == "s"
     end
 
     def get_pos # returns array with pos as two integers, e.g. [1, 2]
@@ -56,17 +57,25 @@ class Game
         tile.flag
     end
 
+    def save_game
+        saved_game = self.to_yaml
+        puts "The game has been saved and ended."
+        raise "Game saved"
+    end
 
     def run
         while @board.unrevealed_empty_tiles > 0
             system("clear")
             @board.render
+            
             command = get_command
+            self.save_game if command == "s"
+
             pos = get_pos
             
             if command == "r"
                 guess(pos)
-            else
+            elsif command == "f"
                 flag_tile(pos)
             end
         end
@@ -78,6 +87,7 @@ end
 
 
 if __FILE__ == $PROGRAM_NAME
-    game = Game.new(9, 9, 10)
+    game = Game.new(9, 9, 10) 
+    # or load  a previous game!
     game.run
 end
