@@ -1,4 +1,3 @@
-require "./board.rb"
 require "colorize"
 
 class Tile

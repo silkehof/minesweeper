@@ -20,10 +20,12 @@ class Game
     end
 
     def valid_command?(command)
-        command == "r" || command == "f" || command == "s"
+        command == "r" || 
+            command == "f" || 
+                command == "s"
     end
 
-    def get_pos # returns array with pos as two integers, e.g. [1, 2]
+    def get_pos
         guessed_pos = nil
         
         until guessed_pos && @board.valid_pos?(guessed_pos)
@@ -45,7 +47,7 @@ class Game
         tile = @board[pos]
 
         if tile.bomb == true
-            puts "You revealed a bomb and lost the game!"
+            puts "You revealed a bomb and lost the game!".colorize(:red)
             @board.final_render
             File.delete("game.yml") if File.exist?("game.yml")
             raise "Game over"
@@ -62,7 +64,7 @@ class Game
 
     def save_game
         File.open("game.yml", "w") { |file| file.write(self.to_yaml) }
-        puts "The game has been saved and ended."
+        puts "The game has been saved and ended.".colorize(:red)
         raise "Game saved"
     end
 
@@ -83,11 +85,11 @@ class Game
             end
         end
 
-        puts "Congratulations, you won the game!"
+        puts "Congratulations, you won the game!".colorize(:green)
         @board.final_render
     end
-
 end
+
 
 
 if __FILE__ == $PROGRAM_NAME

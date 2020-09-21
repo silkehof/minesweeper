@@ -31,6 +31,23 @@ class Board
         all_tiles[0..@bombs].each { |tile| tile.bomb = true }
     end
 
+    def [](pos)
+        x, y = pos
+        @grid[x][y]
+    end
+
+    def []=(pos, value)
+        x, y = pos
+        tile = @grid[x][y]
+        tile.face_value = value
+    end
+
+    def valid_pos?(guessed_pos)
+        guessed_pos[0].between?(0, @height - 1) &&
+            guessed_pos[1].between?(0, @width - 1) &&
+                guessed_pos.count == 2
+    end
+
     def render_row(row, row_num)
         string = "#{row_num} "
         row.each do |tile|
@@ -61,17 +78,6 @@ class Board
         end
 
         self.render
-    end
-
-    def [](pos)
-        x, y = pos
-        @grid[x][y]
-    end
-
-    def []=(pos, value)
-        x, y = pos
-        tile = @grid[x][y]
-        tile.face_value = value
     end
 
     def valid_neighbor?(row_idx, col_idx, row_i, col_i)
@@ -108,11 +114,4 @@ class Board
 
         count
     end
-
-    def valid_pos?(guessed_pos)
-        guessed_pos[0].between?(0, @height - 1) &&
-            guessed_pos[1].between?(0, @width - 1) &&
-                guessed_pos.count == 2
-    end
-
 end
