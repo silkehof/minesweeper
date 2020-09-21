@@ -7,22 +7,33 @@ class Game
     end
 
     def get_command
-        puts "Please enter a command (r for reveal / f for flag):"
-        print "> "
+        command = nil
+        until command && valid_command?(command)
+            puts "Please enter a command (r for reveal / f for flag):"
+            print "> "
 
-        user_input = gets.chomp
-        user_input[0]
+            command = gets.chomp
+        end
+        command
+    end
+
+    def valid_command?(command)
+        command == "r" || command == "f"
     end
 
     def get_pos # returns array with pos as two integers, e.g. [1, 2]
-        puts "Please enter a position in format row, column: e.g. ‘2, 3‘:"
-        print "> "
+        guessed_pos = nil
+        
+        until guessed_pos && @board.valid_pos?(guessed_pos)
+            puts "Please enter a position in format row, column: e.g. ‘2, 3‘:"
+            print "> "
 
-        user_input = gets.chomp
-        guessed_pos = []
+            user_input = gets.chomp
+            guessed_pos = []
 
-        user_input.split(",").each do |char|
-            guessed_pos << Integer(char)
+            user_input.split(",").each do |char|
+                guessed_pos << Integer(char)
+            end
         end
 
         guessed_pos

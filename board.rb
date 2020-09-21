@@ -42,10 +42,7 @@ class Board
     def render
         row_num = 0
 
-        col_title = ""
-        (0...@width).each { |col_num| col_title += " #{col_num}" }
-
-        puts " " + col_title
+        puts "  " + (0...@width).to_a.join(" ")
         @grid.each do |row|
             render_row(row, row_num)
             row_num += 1
@@ -97,6 +94,12 @@ class Board
         end
 
         count
+    end
+
+    def valid_pos?(guessed_pos)
+        guessed_pos[0].between?(0, @height - 1) &&
+            guessed_pos[1].between?(0, @width - 1) &&
+                guessed_pos.count == 2
     end
 
 end
