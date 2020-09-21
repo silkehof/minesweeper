@@ -1,6 +1,7 @@
 require "./board.rb"
 require "./tile.rb"
 require "yaml"
+require "colorize"
 
 class Game
     def initialize(height, width, bombs)

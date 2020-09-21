@@ -1,4 +1,5 @@
 require "./tile.rb"
+require "colorize"
 
 class Board
     attr_accessor :grid

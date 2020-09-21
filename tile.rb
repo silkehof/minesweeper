@@ -1,4 +1,5 @@
 require "./board.rb"
+require "colorize"
 
 class Tile
     attr_accessor :face_value, :bomb, :revealed
@@ -8,7 +9,7 @@ class Tile
         @flagged = false
         @bomb = false
         @revealed = false
-        @face_value = "*"
+        @face_value = "*".colorize(:green)
         @row_i = row_i
         @col_i = col_i
         @board = board
@@ -18,12 +19,12 @@ class Tile
         @revealed = true
 
         if self.neighbors_bomb_count == 0
-            @face_value = "_"
+            @face_value = "_".colorize(:blue)
             self.neighbors.each do |neighbor|
                 neighbor.reveal
             end
         else 
-            @face_value = self.neighbors_bomb_count
+            @face_value = "#{self.neighbors_bomb_count}".colorize(:blue)
         end
     end
 
@@ -41,6 +42,6 @@ class Tile
     end
 
     def flag
-        @face_value = "F"
+        @face_value = "F".colorize(:red)
     end
 end
